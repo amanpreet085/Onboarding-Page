@@ -10,7 +10,9 @@ Currently, two official plugins are available:
 ## To run this project
 
 git clone https://github.com/amanpreet085/Onboarding-Page.git
+
 cd Onboarding-Page
+
 npm run dev
 
 ## run test coverage
