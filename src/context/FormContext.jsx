@@ -1,4 +1,8 @@
 import React, { createContext, useCallback, useReducer } from "react";
+import {
+  corporationNumberValidationUrl,
+  profileDetailsSubmissionUrl,
+} from "../constants/api";
 
 // Define the initial state structure for our form
 const initialFormState = {
@@ -225,7 +229,7 @@ export const FormProvider = ({ children }) => {
 
           try {
             const response = await fetch(
-              `https://fe-hometask-api.dev.vault.tryvault.com/corporation-number/${value}`
+              `${corporationNumberValidationUrl}${value}`
             );
             const data = await response.json();
 
@@ -284,21 +288,18 @@ export const FormProvider = ({ children }) => {
         dispatch({ type: ACTIONS.SET_SUBMIT_ERROR, error: "" });
 
         try {
-          const response = await fetch(
-            "https://fe-hometask-api.dev.vault.tryvault.com/profile-details",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                firstName: formState.values.firstName,
-                lastName: formState.values.lastName,
-                corporationNumber: formState.values.corporationNumber,
-                phone: formState.values.phone,
-              }),
-            }
-          );
+          const response = await fetch(profileDetailsSubmissionUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              firstName: formState.values.firstName,
+              lastName: formState.values.lastName,
+              corporationNumber: formState.values.corporationNumber,
+              phone: formState.values.phone,
+            }),
+          });
 
           if (response.ok) {
             dispatch({ type: ACTIONS.SET_SUBMITTED, isSubmitted: true });
@@ -318,7 +319,6 @@ export const FormProvider = ({ children }) => {
           dispatch({ type: ACTIONS.SET_SUBMITTING, isSubmitting: false });
         }
       }
-
       dispatch({ type: ACTIONS.VALIDATE_FORM });
     },
     [

@@ -3,9 +3,7 @@ import InputField from "../../../InputField";
 import { useForm } from "../../../../hooks/useForm";
 import {
   phoneNumberLabel,
-  requiredFieldMessage,
   phoneNumberCountryCode,
-  validPhoneMessage,
 } from "../../../../constants/form";
 
 const PhoneNumber = () => {
@@ -24,22 +22,11 @@ const PhoneNumber = () => {
       placeholder={`${phoneNumberCountryCode}XXXXXXXXXX`}
       error={errors.phone}
       showError={touched.phone && errors.phone}
-      validate={(value) => {
-        if (!value) return requiredFieldMessage;
-        // Validate Canadian phone numbers starting with +1
-        if (!/^\+1[0-9]{10}$/.test(value)) return validPhoneMessage;
-        return true;
-      }}
       inputProps={{
         // Prevent non-numeric characters except +
         onKeyPress: (e) => {
           const key = e.key;
-          // Allow only numbers and + at the beginning
           if (key !== "+" && isNaN(parseInt(key, 10))) {
-            e.preventDefault();
-          }
-          // Allow + only at the beginning
-          if (key === "+" && e.target.value.length > 0) {
             e.preventDefault();
           }
         },

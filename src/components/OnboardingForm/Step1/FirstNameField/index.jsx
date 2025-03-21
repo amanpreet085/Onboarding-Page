@@ -10,14 +10,6 @@ import {
 const FirstName = () => {
   const { values, errors, touched, handleChange, handleBlur } = useForm();
 
-  const validation = () => {
-    const value = values.firstName;
-    if (!value) return requiredFieldMessage;
-    if (value.length > firstNameMaxLength)
-      return `First name cannot exceed ${firstNameMaxLength} characters`;
-    return true;
-  };
-
   return (
     <InputField
       id="firstName"
@@ -30,7 +22,6 @@ const FirstName = () => {
       maxLength={firstNameMaxLength}
       error={errors.firstName}
       showError={touched.firstName && errors.firstName}
-      validate={validation}
     />
   );
 };
