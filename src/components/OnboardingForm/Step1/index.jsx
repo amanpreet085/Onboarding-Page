@@ -34,6 +34,7 @@ const Step1 = () => {
     <form
       onSubmit={handleSubmit}
       className={`form ${isSubmitting ? "form-submitting" : ""}`}
+      aria-label="form"
     >
       <div className="step-container">
         <div className="form-title">

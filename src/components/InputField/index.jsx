@@ -36,7 +36,7 @@ const InputField = ({
   };
 
   return (
-    <div className={`input-field-container`}>
+    <div className="input-field-container">
       {label && (
         <label htmlFor={id} className="input-label">
           {label}
@@ -62,7 +62,10 @@ const InputField = ({
         />
 
         {isValidating && (
-          <div className="validation-indicator">
+          <div
+            className="validation-indicator"
+            data-testid="validation-spinner"
+          >
             <span className="validation-spinner"></span>
           </div>
         )}

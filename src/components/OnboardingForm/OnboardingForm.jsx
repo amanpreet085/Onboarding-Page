@@ -1,6 +1,5 @@
 import Layout from "./Layout";
 import Step1 from "./Step1";
-import Error from "../Error";
 import "./styles.css";
 import { FormProvider } from "../../context/FormContext";
 
@@ -16,8 +15,7 @@ const OnboardingForm = () => {
 
   const currentStep = 1;
 
-  const Component =
-    stepMap?.find((step) => step.id === currentStep)?.component ?? Error;
+  const Component = stepMap?.find((step) => step.id === currentStep)?.component;
 
   const totalSteps = stepMap?.length ?? 1;
 
