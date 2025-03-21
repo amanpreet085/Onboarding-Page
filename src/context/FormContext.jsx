@@ -314,7 +314,7 @@ export const FormProvider = ({ children }) => {
         } catch {
           dispatch({
             type: ACTIONS.SET_SUBMIT_ERROR,
-            error: "Network error occurred",
+            error: "Error occurred in sending data",
           });
         } finally {
           dispatch({ type: ACTIONS.SET_SUBMITTING, isSubmitting: false });
