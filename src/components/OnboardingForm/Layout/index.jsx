@@ -1,11 +1,14 @@
 import React from "react";
+import "./styles.css";
 
 const Layout = (props) => {
-  const { children } = props;
+  const { children, header } = props;
 
   return (
     <div className="layout">
-      <h1></h1>
+      <div className="header">
+        <p>{header}</p>
+      </div>
       <div className="content">{children}</div>
     </div>
   );

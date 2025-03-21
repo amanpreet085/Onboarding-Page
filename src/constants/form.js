@@ -1,9 +1,13 @@
 // Form Constants
+export const onboardingForm = 'Onboarding Form'
 export const firstNameLabel = 'First Name';
 export const lastNameLabel = 'Last Name';
 export const phoneNumberLabel = 'Phone Number';
 export const corporationNumberLabel = 'Corporation Number';
 export const submitButtonText = 'Submit';
+
+export const formSubmittedSuccessfully = 'Form Submitted Successfully!';
+export const infoReceived = 'Your information has been received.'
 
 
 // Validation Constants

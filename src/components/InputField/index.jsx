@@ -1,25 +1,8 @@
 import React, { useState, useEffect } from "react";
+import "./styles.css";
 
 /**
  * General purpose input field component with validation
- *
- * @param {Object} props - Component props
- * @param {string} props.id - Unique ID for the input field
- * @param {string} props.label - Label text for the input field
- * @param {string} props.type - Input type (text, tel, etc.)
- * @param {string} props.name - Name attribute for the input field
- * @param {string} props.value - Current value of the input field
- * @param {function} props.onChange - Function to call when input changes
- * @param {function} props.onBlur - Function to call when input loses focus
- * @param {boolean} props.required - Whether the field is required
- * @param {string} props.placeholder - Placeholder text
- * @param {number} props.maxLength - Maximum length allowed for the input
- * @param {string} props.error - Error message to display
- * @param {boolean} props.showError - Whether to show the error message
- * @param {function} props.validate - Custom validation function
- * @param {boolean} props.isAsync - Whether validation is asynchronous
- * @param {function} props.asyncValidate - Async validation function
- * @param {Object} props.inputProps - Additional props for the input element
  */
 const InputField = ({
   id,
@@ -36,16 +19,28 @@ const InputField = ({
   showError = false,
   validate,
   isAsync = false,
+  isValidating = false,
   asyncValidate,
   inputProps = {},
+  className = "",
 }) => {
   const [isTouched, setIsTouched] = useState(false);
-  const [isValidating, setIsValidating] = useState(false);
   const [localError, setLocalError] = useState("");
+  const [isValid, setIsValid] = useState(false);
 
   // Combine error states (prop error and local error)
   const displayError = error || localError;
   const shouldShowError = showError || (isTouched && displayError);
+
+  // Update valid state when value changes
+  useEffect(() => {
+    if (validate && value) {
+      const result = validate(value);
+      setIsValid(result === true && !displayError);
+    } else {
+      setIsValid(false);
+    }
+  }, [value, validate, displayError]);
 
   // Handle input change
   const handleChange = (e) => {
@@ -72,40 +67,52 @@ const InputField = ({
       const result = validate(e.target.value);
       if (result !== true) {
         setLocalError(result);
+        setIsValid(false);
         return;
       } else {
         setLocalError("");
+        setIsValid(true);
       }
     }
 
     // Perform async validation if needed
-    if (isAsync && asyncValidate) {
-      setIsValidating(true);
+    if (isAsync && asyncValidate && e.target.value) {
       try {
         const result = await asyncValidate(e.target.value);
         if (result !== true) {
           setLocalError(result);
+          setIsValid(false);
         } else {
           setLocalError("");
+          setIsValid(true);
         }
       } catch (error) {
         setLocalError("Validation failed");
-      } finally {
-        setIsValidating(false);
+        setIsValid(false);
       }
     }
   };
 
+  // Determine validation status for styling
+  const getInputWrapperClass = () => {
+    if (isValidating) return "input-wrapper";
+    if (value && isTouched) {
+      return `input-wrapper ${
+        isValid ? "valid" : shouldShowError ? "invalid" : ""
+      }`;
+    }
+    return "input-wrapper";
+  };
+
   return (
-    <div className="input-field-container">
+    <div className={`input-field-container ${className}`}>
       {label && (
         <label htmlFor={id} className="input-label">
           {label}
-          {required && <span className="required-indicator">*</span>}
         </label>
       )}
 
-      <div className="input-wrapper">
+      <div className={getInputWrapperClass()}>
         <input
           id={id}
           type={type}
@@ -131,7 +138,7 @@ const InputField = ({
       </div>
 
       {shouldShowError && (
-        <p id={`${id}-error`} className="error-message">
+        <p id={`${id}-error`} className="error-message slide-in">
           {displayError}
         </p>
       )}

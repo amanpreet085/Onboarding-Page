@@ -330,18 +330,12 @@ export const FormProvider = ({ children }) => {
     ]
   );
 
-  // Reset the form
-  const resetForm = useCallback(() => {
-    dispatch({ type: ACTIONS.RESET_FORM });
-  }, []);
-
   // Context value
   const value = {
     ...formState,
     handleChange,
     handleBlur,
     handleSubmit,
-    resetForm,
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
