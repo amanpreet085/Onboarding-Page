@@ -111,7 +111,7 @@ const formReducer = (state, action) => {
         submitError: action.error,
       };
 
-    case ACTIONS.VALIDATE_FORM:
+    case ACTIONS.VALIDATE_FORM: {
       // Update isValid based on whether there are any errors
       const hasErrors = Object.values(state.errors).some(
         (error) => error !== ""
@@ -132,6 +132,7 @@ const formReducer = (state, action) => {
         isValid:
           !hasErrors && !hasEmptyRequiredFields && !asyncValidationInProgress,
       };
+    }
 
     default:
       return state;
@@ -236,7 +237,7 @@ export const FormProvider = ({ children }) => {
             if (!data.valid) {
               error = data.message || "Invalid corporation number";
             }
-          } catch (err) {
+          } catch {
             error = "Failed to validate corporation number";
           } finally {
             dispatch({
@@ -310,7 +311,7 @@ export const FormProvider = ({ children }) => {
               error: errorData.message || "Form submission failed",
             });
           }
-        } catch (error) {
+        } catch {
           dispatch({
             type: ACTIONS.SET_SUBMIT_ERROR,
             error: "Network error occurred",
@@ -340,14 +341,5 @@ export const FormProvider = ({ children }) => {
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
 };
-
-// // Custom hook to use form context
-// export const useForm = () => {
-//   const context = useContext(FormContext);
-//   if (!context) {
-//     throw new Error('useForm must be used within a FormProvider');
-//   }
-//   return context;
-// };
 
 export default FormContext;

@@ -13,7 +13,7 @@ import {
 import Header from "./Header";
 
 const Step1 = () => {
-  const { isSubmitting, isSubmitted, submitError, handleSubmit } = useForm();
+  const { isSubmitting, isSubmitted, handleSubmit } = useForm();
 
   if (isSubmitted) {
     return (

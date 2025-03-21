@@ -1,11 +1,7 @@
 import React from "react";
 import InputField from "../../../InputField";
 import { useForm } from "../../../../hooks/useForm";
-import {
-  firstNameLabel,
-  firstNameMaxLength,
-  requiredFieldMessage,
-} from "../../../../constants/form";
+import { firstNameLabel, firstNameMaxLength } from "../../../../constants/form";
 
 const FirstName = () => {
   const { values, errors, touched, handleChange, handleBlur } = useForm();

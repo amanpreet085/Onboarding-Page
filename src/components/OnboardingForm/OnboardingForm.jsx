@@ -4,7 +4,7 @@ import Error from "../Error";
 import "./styles.css";
 import { FormProvider } from "../../context/FormContext";
 
-const OnboardingForm = (props) => {
+const OnboardingForm = () => {
   // The below logic can be used to navigate to different steps. I'm gonna leave it as it is for this task
   const stepMap = [
     { id: 1, name: "Step1", component: Step1 },

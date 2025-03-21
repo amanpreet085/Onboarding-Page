@@ -12,7 +12,6 @@ const InputField = ({
   value,
   onChange,
   onBlur,
-  required = false,
   placeholder = "",
   maxLength,
   error = "",
@@ -86,7 +85,7 @@ const InputField = ({
           setLocalError("");
           setIsValid(true);
         }
-      } catch (error) {
+      } catch {
         setLocalError("Validation failed");
         setIsValid(false);
       }
