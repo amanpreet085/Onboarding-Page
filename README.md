@@ -13,6 +13,8 @@ git clone https://github.com/amanpreet085/Onboarding-Page.git
 
 cd Onboarding-Page
 
+npm install
+
 npm run dev
 
 ## run test coverage
